@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PestControlWeb", "PestControlWeb\PestControlWeb.csproj", "{85F641C1-9CF5-4DA4-95DF-E4F401A199E8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PestControlDll", "PestControlDll\PestControlDll.csproj", "{C94EC3B6-18D5-46FA-87D7-F46B5D610A5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PestControlDll.UnitTest", "PestControlDll.UnitTest\PestControlDll.UnitTest.csproj", "{3E8B9970-111D-4E30-A305-60DF433BB382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PestControlWeb", "PestControlWeb\PestControlWeb.csproj", "{87B33F89-31F4-4250-9FEF-451EF1864DF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{85F641C1-9CF5-4DA4-95DF-E4F401A199E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85F641C1-9CF5-4DA4-95DF-E4F401A199E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85F641C1-9CF5-4DA4-95DF-E4F401A199E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85F641C1-9CF5-4DA4-95DF-E4F401A199E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C94EC3B6-18D5-46FA-87D7-F46B5D610A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C94EC3B6-18D5-46FA-87D7-F46B5D610A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C94EC3B6-18D5-46FA-87D7-F46B5D610A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{3E8B9970-111D-4E30-A305-60DF433BB382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E8B9970-111D-4E30-A305-60DF433BB382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E8B9970-111D-4E30-A305-60DF433BB382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B33F89-31F4-4250-9FEF-451EF1864DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B33F89-31F4-4250-9FEF-451EF1864DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B33F89-31F4-4250-9FEF-451EF1864DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B33F89-31F4-4250-9FEF-451EF1864DF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
