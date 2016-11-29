@@ -12,5 +12,7 @@ namespace PestControlDll.Entities
 
         //FullAddress, contains ALL info such as, street name, post code, city, country etc...
         public string FullAddress { get; set; }
+        public Route Route { get; set; }
+        public int RouteId { get; set; }
     }
 }

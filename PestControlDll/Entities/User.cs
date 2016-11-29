@@ -16,6 +16,7 @@ namespace PestControlDll.Entities
 
         //Enums associated its value with ordered numbers, starting from 0.
         //UserType == 0 means that there are Admin.
-        public enum UserType { Admin, Default };
+        public enum UserTypeEnum { Admin, Default };
+        public UserTypeEnum UserType { get; set; }
     }
 }

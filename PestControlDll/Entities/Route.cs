@@ -10,5 +10,7 @@ namespace PestControlDll.Entities
     {
         public List<Destination> Destinations { get; set; }
         public DateTime Date { get; set; }
+        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }
