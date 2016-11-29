@@ -15,7 +15,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PostAsJsonAsync("api/pesttype", t).Result;
+                var response = client.PostAsJsonAsync("api/pesttypes", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<PestType>().Result;
@@ -29,7 +29,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync($"api/pesttype/{id}").Result;
+                var response = client.GetAsync($"api/pesttypes/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<PestType>().Result;
@@ -43,7 +43,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync("api/pesttype").Result;
+                var response = client.GetAsync("api/pesttypes").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<List<PestType>>().Result;
@@ -57,7 +57,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PutAsJsonAsync("api/pesttype", t).Result;
+                var response = client.PutAsJsonAsync("api/pesttypes", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<PestType>().Result;
@@ -71,7 +71,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.DeleteAsync($"api/pesttype/{id}").Result;
+                var response = client.DeleteAsync($"api/pesttypes/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;

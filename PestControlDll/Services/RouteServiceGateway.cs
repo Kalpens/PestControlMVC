@@ -15,7 +15,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PostAsJsonAsync("api/route", t).Result;
+                var response = client.PostAsJsonAsync("api/routes", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Route>().Result;
@@ -29,7 +29,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync($"api/route/{id}").Result;
+                var response = client.GetAsync($"api/routes/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Route>().Result;
@@ -43,7 +43,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync("api/route").Result;
+                var response = client.GetAsync("api/routes").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<List<Route>>().Result;
@@ -57,7 +57,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PutAsJsonAsync("api/route", t).Result;
+                var response = client.PutAsJsonAsync("api/routes", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Route>().Result;
@@ -71,7 +71,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.DeleteAsync($"api/route/{id}").Result;
+                var response = client.DeleteAsync($"api/routes/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;

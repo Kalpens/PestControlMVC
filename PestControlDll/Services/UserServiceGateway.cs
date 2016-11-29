@@ -15,7 +15,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PostAsJsonAsync("api/user", t).Result;
+                var response = client.PostAsJsonAsync("api/users", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<User>().Result;
@@ -29,7 +29,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync($"api/user/{id}").Result;
+                var response = client.GetAsync($"api/users/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<User>().Result;
@@ -43,7 +43,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync("api/user").Result;
+                var response = client.GetAsync("api/users").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<List<User>>().Result;
@@ -57,7 +57,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PutAsJsonAsync("api/user", t).Result;
+                var response = client.PutAsJsonAsync("api/users", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<User>().Result;
@@ -71,7 +71,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.DeleteAsync($"api/user/{id}").Result;
+                var response = client.DeleteAsync($"api/users/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;

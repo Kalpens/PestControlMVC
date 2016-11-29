@@ -15,7 +15,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PostAsJsonAsync("api/worksheet", t).Result;
+                var response = client.PostAsJsonAsync("api/worksheets", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Worksheet>().Result;
@@ -29,7 +29,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync($"api/worksheet/{id}").Result;
+                var response = client.GetAsync($"api/worksheets/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Worksheet>().Result;
@@ -43,7 +43,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.GetAsync("api/worksheet").Result;
+                var response = client.GetAsync("api/worksheets").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<List<Worksheet>>().Result;
@@ -57,7 +57,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.PutAsJsonAsync("api/worksheet", t).Result;
+                var response = client.PutAsJsonAsync("api/worksheets", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Worksheet>().Result;
@@ -71,7 +71,7 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 RunAsync(client);
-                var response = client.DeleteAsync($"api/worksheet/{id}").Result;
+                var response = client.DeleteAsync($"api/worksheets/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
