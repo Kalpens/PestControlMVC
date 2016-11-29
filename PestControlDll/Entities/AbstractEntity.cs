@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PestControlDll.Entities
 {
-    class AbstractEntity
+    public class AbstractEntity
     {
         public int Id { get; set; }
     }

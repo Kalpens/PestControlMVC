@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PestControlDll.Entities
 {
-    class Destination : AbstractEntity
+    public class Destination : AbstractEntity
     {
         public Worksheet Worksheet { get; set; }
 

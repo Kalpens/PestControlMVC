@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace PestControlDll
 {
-    interface IServiceGateway
+    public interface IServiceGateway<T>
     {
+        T Put(T t);
+        T Get(int id);
+        List<T> Get();
+        T Post(T t);
+        bool Delete(int id);
     }
 }

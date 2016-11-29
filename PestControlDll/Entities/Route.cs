@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PestControlDll.Entities
 {
-    class Route : AbstractEntity
+    public class Route : AbstractEntity
     {
         public List<Destination> Destinations { get; set; }
         public DateTime Date { get; set; }
