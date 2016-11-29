@@ -10,7 +10,7 @@ namespace PestControlDll.Services
 {
     class DestinationServiceGateway : AbstractPestcontrolServiceGateway, IServiceGateway<Destination>
     {
-        public Destination Put(Destination t)
+        public Destination Post(Destination t)
         {
             using (var client = new HttpClient())
             {
@@ -52,7 +52,7 @@ namespace PestControlDll.Services
             }
         }
 
-        public Destination Post(Destination t)
+        public Destination Put(Destination t)
         {
             using (var client = new HttpClient())
             {

@@ -13,7 +13,7 @@ namespace PestControlDll
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        T Put(T t);
+        T Post(T t);
         /// <summary>
         /// Gets one object from api who has the exact id
         /// </summary>
@@ -30,7 +30,7 @@ namespace PestControlDll
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        T Post(T t);
+        T Put(T t);
         /// <summary>
         /// Deletes provided object
         /// </summary>

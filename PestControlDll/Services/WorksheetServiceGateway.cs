@@ -10,7 +10,7 @@ namespace PestControlDll.Services
 {
     class WorksheetServiceGateway : AbstractPestcontrolServiceGateway, IServiceGateway<Worksheet>
     {
-        public Worksheet Put(Worksheet t)
+        public Worksheet Post(Worksheet t)
         {
             using (var client = new HttpClient())
             {
@@ -52,7 +52,7 @@ namespace PestControlDll.Services
             }
         }
 
-        public Worksheet Post(Worksheet t)
+        public Worksheet Put(Worksheet t)
         {
             using (var client = new HttpClient())
             {
