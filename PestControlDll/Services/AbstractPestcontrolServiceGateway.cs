@@ -12,7 +12,7 @@ namespace PestControlDll.Services
     {
         public async Task RunAsync(HttpClient client)
         {
-            client.BaseAddress = new Uri("http://hmswebapisolution.azurewebsites.net/");
+            client.BaseAddress = new Uri("http://pestcontrolapi.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
