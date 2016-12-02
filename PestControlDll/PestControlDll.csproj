@@ -40,6 +40,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,9 +56,11 @@
     <Compile Include="Entities\Route.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Worksheet.cs" />
-    <Compile Include="IServiceGateway.cs" />
+    <Compile Include="Interfaces\IAccountGateway.cs" />
+    <Compile Include="Interfaces\IServiceGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AbstractPestcontrolServiceGateway.cs" />
+    <Compile Include="Services\AccountGateway.cs" />
     <Compile Include="Services\DestinationServiceGateway.cs" />
     <Compile Include="Services\PestTypeServiceGateway.cs" />
     <Compile Include="Services\RouteServiceGateway.cs" />

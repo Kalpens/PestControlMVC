@@ -14,7 +14,7 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                RunAsync(client);
+                PrepareHeaderWithAuthentication(client);
                 var response = client.PostAsJsonAsync("api/destinations", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -28,7 +28,7 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                RunAsync(client);
+                PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync($"api/destinations/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -42,7 +42,7 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                RunAsync(client);
+                PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync("api/destinations").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -56,7 +56,7 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                RunAsync(client);
+                PrepareHeaderWithAuthentication(client);
                 var response = client.PutAsJsonAsync("api/destinations", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,7 +70,7 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                RunAsync(client);
+                PrepareHeaderWithAuthentication(client);
                 var response = client.DeleteAsync($"api/destinations/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {

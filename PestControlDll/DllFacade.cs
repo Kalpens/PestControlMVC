@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PestControlDll.Entities;
+using PestControlDll.Interfaces;
 using PestControlDll.Services;
 
 namespace PestControlDll
@@ -32,6 +33,10 @@ namespace PestControlDll
         public IServiceGateway<Worksheet> GetWorksheetServiceGateway()
         {
             return new WorksheetServiceGateway();
+        }
+        public IAccountGateway GetAccountGateway()
+        {
+            return new AccountGateway();
         }
     }
 }
