@@ -85,6 +85,11 @@ namespace PestControlWeb.Controllers
             return View(model);
             
         }
+        // GET: Account/AccountInfo
+        public ActionResult AccountInfo()
+        {
+            return View();
+        }
     }
 
 }
