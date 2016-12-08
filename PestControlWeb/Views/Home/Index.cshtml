@@ -8,129 +8,119 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 col-sm-4 sidebar1">
-                <div class="logo">
-                    <img src="http://lorempixel.com/output/people-q-g-64-64-1.jpg" class="img-responsive center-block" alt="Logo">
-                </div>
-                <br>
-                <div class="left-navigation">
-                    <ul class="list">
-                        <h5><strong>WHEREABOUTS</strong></h5>
-                        <li>Home</li>
-                        <li>Office</li>
-                        <li>School</li>
-                        <li>Gym</li>
-                        <li>Art Class</li>
-                        <li>Hike Club</li>
-                    </ul>
-                    <br>
-                    <ul class="list">
-                        <h5><strong>HOBBIES</strong></h5>
-                        <li>Hiking</li>
-                        <li>Rafting</li>
-                        <li>Badminton</li>
-                        <li>Tennis</li>
-                        <li>Sketching</li>
-                        <li>Horse Riding</li>
+                @* Below here is sidebar *@  
+                <div>
+                    <input type="text" id="add" size="20" />
+                    <input type="button" id="btnAdd" value="Add" onclick="addItem()">
+                    <ul id="destinations">
                     </ul>
                 </div>
             </div>
             <div class="col-md-10 col-sm-8 main-content">
+                @* Below here is the main content *@
                 <div id="dvMap" style="width: 500px; height: 500px">
-                    <!--Main content code to be written here -->
-                    <h1>FEEDBACK APPRECIATED! :)</h1>
-                    <h3>P.S.: For side navbar with dropdown menu, you may refer this snippet: http://bootsnipp.com/user/snippets/kWPoW</h3>
                 </div>
             </div>
         </div>
     </div>
-
 @section scripts
 {
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript">
-    var markers = [
+    <script type="text/javascript">
+        var markers = [
             {
                 "title": 'Alibaug',
                 "lat": '18.641400',
                 "lng": '72.872200',
                 "description": 'Alibaug is a coastal town and a municipal council in Raigad District in the Konkan region of Maharashtra, India.'
             }
-        ,
+            ,
             {
                 "title": 'Mumbai',
                 "lat": '18.964700',
                 "lng": '72.825800',
                 "description": 'Mumbai formerly Bombay, is the capital city of the Indian state of Maharashtra.'
             }
-        ,
+            ,
             {
                 "title": 'Pune',
                 "lat": '18.523600',
                 "lng": '73.847800',
                 "description": 'Pune is the seventh largest metropolis in India, the second largest in the state of Maharashtra after Mumbai.'
             }
-    ];
-    window.onload = function () {
-        var mapOptions = {
-            center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
-            zoom: 10,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-        var infoWindow = new google.maps.InfoWindow();
-        var lat_lng = new Array();
-        var latlngbounds = new google.maps.LatLngBounds();
-        for (i = 0; i < markers.length; i++) {
-            var data = markers[i]
-            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
-            lat_lng.push(myLatlng);
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: data.title
-            });
-            latlngbounds.extend(marker.position);
-            (function (marker, data) {
-                google.maps.event.addListener(marker, "click", function (e) {
-                    infoWindow.setContent(data.description);
-                    infoWindow.open(map, marker);
+        ];
+        window.onload = function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            var infoWindow = new google.maps.InfoWindow();
+            var lat_lng = new Array();
+            var latlngbounds = new google.maps.LatLngBounds();
+            for (i = 0; i < markers.length; i++) {
+                var data = markers[i]
+                var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+                lat_lng.push(myLatlng);
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: data.title
                 });
-            })(marker, data);
-        }
-        map.setCenter(latlngbounds.getCenter());
-        map.fitBounds(latlngbounds);
+                latlngbounds.extend(marker.position);
+                (function (marker, data) {
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        infoWindow.setContent(data.description);
+                        infoWindow.open(map, marker);
+                    });
+                })(marker, data);
+            }
+            map.setCenter(latlngbounds.getCenter());
+            map.fitBounds(latlngbounds);
 
-        //***********ROUTING****************//
+            //***********ROUTING****************//
 
-        //Initialize the Path Array
-        var path = new google.maps.MVCArray();
+            //Initialize the Path Array
+            var path = new google.maps.MVCArray();
 
-        //Initialize the Direction Service
-        var service = new google.maps.DirectionsService();
+            //Initialize the Direction Service
+            var service = new google.maps.DirectionsService();
 
-        //Set the Path Stroke Color
-        var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+            //Set the Path Stroke Color
+            var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
 
-        //Loop and Draw Path Route between the Points on MAP
-        for (var i = 0; i < lat_lng.length; i++) {
-            if ((i + 1) < lat_lng.length) {
-                var src = lat_lng[i];
-                var des = lat_lng[i + 1];
-                path.push(src);
-                poly.setPath(path);
-                service.route({
-                    origin: src,
-                    destination: des,
-                    travelMode: google.maps.DirectionsTravelMode.DRIVING
-                }, function (result, status) {
-                    if (status == google.maps.DirectionsStatus.OK) {
-                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
-                            path.push(result.routes[0].overview_path[i]);
+            //Loop and Draw Path Route between the Points on MAP
+            for (var i = 0; i < lat_lng.length; i++) {
+                if ((i + 1) < lat_lng.length) {
+                    var src = lat_lng[i];
+                    var des = lat_lng[i + 1];
+                    path.push(src);
+                    poly.setPath(path);
+                    service.route({
+                        origin: src,
+                        destination: des,
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING
+                    }, function (result, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                                path.push(result.routes[0].overview_path[i]);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         }
+    </script>
+
+    <script>
+    function addItem(){
+        var li = document.createElement("LI");
+        var input = document.getElementById("add");
+        li.innerHTML = input.value;
+        input.value = "";
+
+        document.getElementById("destinations").appendChild(li);
     }
-</script>
+    </script>
 }

@@ -14,5 +14,7 @@ namespace PestControlDll.Entities
         public string FullAddress { get; set; }
         public Route Route { get; set; }
         public int RouteId { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
     }
 }

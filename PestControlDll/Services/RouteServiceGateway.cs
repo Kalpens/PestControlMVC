@@ -18,6 +18,9 @@ namespace PestControlDll.Services
                 var response = client.PostAsJsonAsync("api/routes", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    var u = new UserServiceGateway().Get(t.UserId);
+                    u.Routes.Add(t);
+                    new UserServiceGateway().Put(u);
                     return response.Content.ReadAsAsync<Route>().Result;
                 }
                 return null;

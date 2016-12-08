@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using GoogleMaps.LocationServices;
 using PestControlDll.Entities;
 
 namespace PestControlDll.Services
@@ -18,6 +19,10 @@ namespace PestControlDll.Services
                 var response = client.PostAsJsonAsync("api/destinations", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    setCoordinates(t);
+                    var r = new RouteServiceGateway().Get(t.RouteId);
+                    r.Destinations.Add(t);
+                    new RouteServiceGateway().Put(r);
                     return response.Content.ReadAsAsync<Destination>().Result;
                 }
                 return null;
@@ -60,6 +65,7 @@ namespace PestControlDll.Services
                 var response = client.PutAsJsonAsync("api/destinations", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    setCoordinates(t);
                     return response.Content.ReadAsAsync<Destination>().Result;
                 }
                 return null;
@@ -78,6 +84,13 @@ namespace PestControlDll.Services
                 }
                 return false;
             }
+        }
+
+        private void setCoordinates(Destination t)
+        {
+            var point = new GoogleLocationService().GetLatLongFromAddress(t.FullAddress);
+            t.Lat = point.Latitude;
+            t.Long = point.Longitude;
         }
     }
 }

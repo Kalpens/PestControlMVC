@@ -29,7 +29,6 @@ namespace PestControlDll.Services
             using (var client = new HttpClient())
             {
                 PrepareHeaderWithAuthentication(client);
-                PrepareHeader(client);
                 var response = client.GetAsync($"api/pesttypes/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
