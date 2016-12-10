@@ -32,12 +32,12 @@
   <ItemGroup>
     <Reference Include="GoogleMaps.LocationServices, Version=0.1.5926.26040, Culture=neutral, processorArchitecture=MSIL">
 <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\PestControlDll\GoogleMapNuGet\GoogleMaps.LocationServices.dll</HintPath>
+      <HintPath>..\PestControlDll\FailingNuGetPack\GoogleMaps.LocationServices.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
 <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\PestControlDll\FailingNuGetPack\Newtonsoft.Json.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <Reference Include="System" />
