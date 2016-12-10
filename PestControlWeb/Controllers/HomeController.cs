@@ -11,6 +11,7 @@ namespace PestControlWeb.Controllers
     {
         public ActionResult Index(Route route)
         {
+            ViewBag.DestinationList = new List<string>();
             return View(route);
         }
         [HttpPost]

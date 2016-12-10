@@ -7,32 +7,33 @@
     <title>Twitter Bootstrap Tutorial - A responsive layout tutorial</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 col-sm-4 sidebar1">
-                @* Below here is sidebar *@  
-                <div>
-                    <input type="text" id="add" size="20" />
-                    <input type="button" id="btnAdd" value="Add" onclick="addItem()">
-                    <ul id="destinations">
-                        @if (Model.Destinations != null)
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-sm-4 sidebar1">
+            @* Below here is sidebar *@  
+            <div>
+                <input type="text" id="add" size="20" />
+                <input type="button" id="btnAdd" value="Add" onclick="addItem()">
+                <ul id="destinations">
+                    @if (Model.Destinations != null)
+                    {
+                        foreach (var item in Model.Destinations)
                         {
-                            foreach (var item in Model.Destinations)
-                            {
-                                <li>@item.FullAddress</li>
-                            }
+                            <li>@item.FullAddress</li>
                         }
-                    </ul>
+                    }
+                </ul>
 
-                </div>
             </div>
-            <div class="col-md-10 col-sm-8 main-content">
-                @* Below here is the main content *@
-                <div id="dvMap" style="width: 500px; height: 500px">
-                </div>
+        </div>
+        <div class="col-md-10 col-sm-8 main-content">
+            @* Below here is the main content *@
+            <div id="dvMap" style="width: 500px; height: 500px">
             </div>
         </div>
     </div>
+</div>
+    @ViewBag.DestinationList 
 @section scripts
 {
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAIMFJfxLEK2MfCwQUSvqUk92Bd2eApj2o&callback=initMap"></script>
@@ -163,6 +164,7 @@
             var li = document.createElement("LI");
             var input = document.getElementById("add");
             li.innerHTML = input.value;
+            @ViewBag.DestinationList.a
             input.value = "";
 
             document.getElementById("destinations").appendChild(li);
