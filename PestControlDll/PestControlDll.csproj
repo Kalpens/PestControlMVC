@@ -31,12 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GoogleMaps.LocationServices, Version=0.1.5926.26040, Culture=neutral, processorArchitecture=MSIL">
-<SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\PestControlDll\FailingNuGetPack\GoogleMaps.LocationServices.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-<SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\PestControlDll\FailingNuGetPack\Newtonsoft.Json.dll</HintPath>
       <Private>true</Private>
     </Reference>
@@ -63,7 +63,9 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Worksheet.cs" />
     <Compile Include="Interfaces\IAccountGateway.cs" />
+    <Compile Include="Interfaces\ILocalDestinationManager.cs" />
     <Compile Include="Interfaces\IServiceGateway.cs" />
+    <Compile Include="LocalManagers\LocalDestinationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AbstractPestcontrolServiceGateway.cs" />
     <Compile Include="Services\AccountGateway.cs" />

@@ -1,0 +1,11 @@
+﻿body {
+}
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+ul {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}

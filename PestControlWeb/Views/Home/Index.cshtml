@@ -3,171 +3,71 @@
 @{
     ViewBag.Title = "Home Page";
 }
-<head>
-    <title>Twitter Bootstrap Tutorial - A responsive layout tutorial</title>
-</head>
+<link href="~/Content/MapControllerCss.css" rel="stylesheet" />
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2 col-sm-4 sidebar1">
-            @* Below here is sidebar *@  
-            <div>
-                <input type="text" id="add" size="20" />
-                <input type="button" id="btnAdd" value="Add" onclick="addItem()">
-                <ul id="destinations">
-                    @if (Model.Destinations != null)
-                    {
-                        foreach (var item in Model.Destinations)
+    <form method="post" action="/Home/AddAddressToRoute">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 col-sm-4 sidebar1">
+                    @* Below here is sidebar *@
+                    <div>
+                        
+
+                        @if (Model.Id != 0)
                         {
-                            <li>@item.FullAddress</li>
+                            <label class="control-label">Route</label>
+                            <input type="hidden" id="Id" name="Route.Id" value=@Model.Id/>
+                            <input type="text" id="Name" name="Route.Name" size="20" value=@Model.Name/><br/>
                         }
-                    }
-                </ul>
+                        else
+                        {
+                            <label class="control-label">Route</label>
+                            <input type="hidden" id="Id" name="Route.Id" value=@Model.Id />
+                            <input type="text" id="Name" name="Route.Name" size="20"/><br/>
+                        }
+                        Address: <input type="text" id="Address" name="Address"/>
 
+
+                        <input type="submit" value="add"/>
+                    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-md-10 col-sm-8 main-content">
+                    @* Below here is the main content *@
+                    <ul id="destinations">
+                        @if (Model.Destinations != null)
+                        {
+                            foreach (var item in Model.Destinations)
+                            {
+                                <input type="hidden" name="Route.Destinations.Lat" value=@item.Lat/>
+                                <input type="hidden" name="Route.Destinations.Long" value=@item.Long />
+                                <input type="hidden" name="Route.Destinations.FullAddress" value=@item.FullAddress />
+                            }
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="col-md-10 col-sm-8 main-content">
-            @* Below here is the main content *@
-            <div id="dvMap" style="width: 500px; height: 500px">
-            </div>
-        </div>
-    </div>
-</div>
-    @ViewBag.DestinationList 
-@section scripts
-{
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAIMFJfxLEK2MfCwQUSvqUk92Bd2eApj2o&callback=initMap"></script>
-    <script type="text/javascript">
-        var markers = [
-            {
-                "title": 'Alibaug',
-                "lat": '17.641400',
-                "lng": '74.872200',
-                "description": 'Alibaug is a coastal town and a municipal council in Raigad District in the Konkan region of Maharashtra, India.'
-            }
-        ,
-            {
-                "title": 'Alibaug',
-                "lat": '19.641400',
-                "lng": '74.872200',
-                "description": 'Alibaug is a coastal town and a municipal council in Raigad District in the Konkan region of Maharashtra, India.'
-            }
-        ,
-            {
-                "title": 'Mumbai',
-                "lat": '18.964700',
-                "lng": '72.825800',
-                "description": 'Mumbai formerly Bombay, is the capital city of the Indian state of Maharashtra.'
-            },
-            {
-                "title": 'Pune',
-                "lat": '18.523600',
-                "lng": '73.847800',
-                "description":
-                    'Pune is the seventh largest metropolis in India, the second largest in the state of Maharashtra after Mumbai.'
-            }
-
-
-        ];
-        //Adding destinations onto marker array with coordinates
-            var list = [@Model.Destinations];
-
-            for (i = 0; i < list.size; i++) {
-                var s = i;
-                markers.push({
-                    "title": list[i].FullName,
-                    "lat": list[i].lat,
-                    "lng": list[i].lng,
-                    "description": list[i].FullName
-                });
-            }
-        //Options where the map will start on load.
-        window.onload = function () {
-        var mapOptions = {
-            center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
-            zoom: 10,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        //This makes div eith id dvMap a google map.
-        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-            //InfoWindow will be used to set information about objects in this case description, namely address
-        var infoWindow = new google.maps.InfoWindow();
-            //array for latitude and longitude so that later we can draw route between markers.
-        var lat_lng = new Array();
-        var latlngbounds = new google.maps.LatLngBounds();
-            //Loop for adding all the markers in coordinates
-        for (i = 0; i < markers.length; i++) {
-            //Gets first marker object
-            var data = markers[i]
-            //Converts it into google maps lat/lng values
-            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
-            //Adds coordinates to array.
-            lat_lng.push(myLatlng);
-            //adds marker to map and creates local marker object.
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: data.title
-            });
-            //For each marker, latlng bounds are extended, so later on, when maps are shown they would show center of the map
-            latlngbounds.extend(marker.position);
-            (function (marker, data) {
-                //Adding listener on marker, if clicked displays description
-                google.maps.event.addListener(marker, "click", function (e) {
-                    infoWindow.setContent(data.description);
-                    infoWindow.open(map, marker);
-                });
-            })(marker, data);
-        }
-            //Sets the map in center of markers.
-        map.setCenter(latlngbounds.getCenter());
-        map.fitBounds(latlngbounds);
-
-        //***********ROUTING****************//
-
-        //Initialize the Path Array
-        var path = new google.maps.MVCArray();
-
-        //Initialize the Direction Service
-        var service = new google.maps.DirectionsService();
-
-        //Set the Path Stroke Color
-        var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
-
-        //Loop and Draw Path Route between the Points on MAP
-        for (var i = 0; i < lat_lng.length ; i++) {
-            if ((i + 1) < lat_lng.length) {
-                var src = lat_lng[i];
-                var des = lat_lng[i + 1];
-                //path.push(src);
-                poly.setPath(path);
-                service.route({
-                    origin: src,
-                    destination: des
-                    ,
-                    travelMode: google.maps.DirectionsTravelMode.DRIVING
-                }, function (result, status) {
-                    if (status == google.maps.DirectionsStatus.OK) {
-                        for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
-                            path.push(result.routes[0].overview_path[i]);
-                        }
-                    }
-                });
-            }
-        }
-    }
-    </script>
-
-
-    <script>
-        function addItem() {
-            var li = document.createElement("LI");
-            var input = document.getElementById("add");
-            li.innerHTML = input.value;
-            @ViewBag.DestinationList.a
-            input.value = "";
-
-            document.getElementById("destinations").appendChild(li);
-        }
-    </script>
-}
+    </form>
+</body>

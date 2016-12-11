@@ -14,13 +14,17 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
+                var u = new UserServiceGateway().Get(t.UserId);
+                if (u != null)
+                {
+                    u.Routes.Add(t);
+                    t.Destinations = new List<Destination>();
+                    new UserServiceGateway().Put(u);
+                }
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PostAsJsonAsync("api/routes", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var u = new UserServiceGateway().Get(t.UserId);
-                    u.Routes.Add(t);
-                    new UserServiceGateway().Put(u);
                     return response.Content.ReadAsAsync<Route>().Result;
                 }
                 return null;
