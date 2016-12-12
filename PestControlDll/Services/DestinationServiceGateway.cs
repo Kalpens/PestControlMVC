@@ -15,23 +15,14 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                var r = new RouteServiceGateway().Get(t.RouteId);
-                //If this route exists in db, then it will be added 
-                //to destination and also a new worksheet will be added for this destination
-                if (r != null)
-                {
-                    t.Route = r;
-                    Worksheet worksheet = new Worksheet() {Destination = t, Address = t.FullAddress};
-                    t.Worksheet = new WorksheetServiceGateway().Post(worksheet);
-                    //Coordinates being set for destination
-                    setCoordinates(t);
-                }
+                setCoordinates(t);
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PostAsJsonAsync("api/destinations", t).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    r.Destinations.Add(t);
-                    new RouteServiceGateway().Put(r);
+                    //If destination is succesfully created, then we also will create worksheet.
+                    Worksheet worksheet = new Worksheet() { Destination = t, Address = t.FullAddress };
+                    t.Worksheet = new WorksheetServiceGateway().Post(worksheet);
                     return response.Content.ReadAsAsync<Destination>().Result;
                 }
                 return null;
