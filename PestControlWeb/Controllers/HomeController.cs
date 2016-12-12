@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using PestControlDll;
 using PestControlDll.Entities;
+using PestControlDll.Interfaces;
 using PestControlWeb.Models;
 
 namespace PestControlWeb.Controllers
@@ -14,6 +16,7 @@ namespace PestControlWeb.Controllers
     {
         private IServiceGateway<Destination> destinationGateway = new DllFacade().GetDestinationServiceGateway();
         private IServiceGateway<Route> routeGateway = new DllFacade().GetRouteServiceGateway();
+        private IAccountGateway accountGateway = new DllFacade().GetAccountGateway();
         public ActionResult Index(Route route)
         {
             //If route temptada is not null, then the tempdata will be sent to the view
@@ -31,47 +34,46 @@ namespace PestControlWeb.Controllers
         [HttpPost]
         public ActionResult AddAddressToRoute(MapViewModel model)
         {
-            //User has logged in and all parameters are inserted
-            if (model.Route.Id != 0 && System.Web.HttpContext.Current.Session["token"] != null && model.Address != null)
+            try
             {
-                if (model.Route.Id == 0)
+                //There is already a route
+                if (model.Route.Id != 0 && model.Address != null)
                 {
-                    model.Route.Date = DateTime.Now;
-                    model.Route = routeGateway.Post(model.Route);
+                    Destination destination = new Destination()
+                    { FullAddress = model.Address, RouteId = model.Route.Id };
+                    destinationGateway.Post(destination);
+                    TempData["route"] = model.Route;
+                    return RedirectToAction("Index");
                 }
-                Destination destination = new Destination()
-                { FullAddress = model.Address, RouteId = model.Route.Id};
-                destinationGateway.Post(destination);
-                TempData["route"] = model.Route;
-                return RedirectToAction("Index");
-            }
-            //User has not logged in but has parameters
-            else if (model.Route.Id != 0 && model.Address != null && System.Web.HttpContext.Current.Session["token"] == null)
-            {
-                model.Route.Destinations.Add(
-                    new DllFacade().GetLocalDestinationManager().CreateDestination(model.Route, model.Address));
-                TempData["route"] = model.Route;
-                return RedirectToAction("Index");
-            }
-            //User has not logged in and has no route, but he has address
-            else if (model.Route.Id == 0 && model.Address != null && System.Web.HttpContext.Current.Session["token"] == null)
-            {
-                var route = new Route()
+                //There isn't a route so it is created and first destination added.
+                else if (model.Route.Id == 0 && model.Address != null)
                 {
-                    Date = DateTime.Now,
-                    Name = "WillNotBeSaved",
-                    Destinations = new List<Destination>(),
-                    Id = -1
-                };
-
-                route.Destinations.Add(
-                    new DllFacade().GetLocalDestinationManager().CreateDestination(model.Route, model.Address));
-                TempData["route"] = route;
-                return RedirectToAction("Index");
+                    var currentUser = accountGateway.GetCurrentUser();
+                    Route route = new Route()
+                    {
+                        Date = DateTime.Now,
+                        Name = model.Route.Name,
+                        UserId = currentUser.Id
+                    };
+                    route = routeGateway.Post(route);
+                    Destination destination = new Destination()
+                    { FullAddress = model.Address, RouteId = route.Id };
+                    destinationGateway.Post(destination);
+                    TempData["route"] = routeGateway.Get(route.Id);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
+            catch (HttpRequestException ex)
             {
-                return RedirectToAction("Index");
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
             }
         }
     }

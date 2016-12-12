@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using PestControlDll.Entities;
 using PestControlDll.Interfaces;
 
 namespace PestControlDll.Services
@@ -14,6 +15,7 @@ namespace PestControlDll.Services
     {
         public HttpResponseMessage Register(string email, string password, string confirmPassword)
         {
+            
             using (var client = new HttpClient())
             {
                 PrepareHeader(client);
@@ -49,6 +51,31 @@ namespace PestControlDll.Services
 
                 return response;
             }
+        }
+
+        public User GetCurrentUser()
+        {
+            using (var client = new HttpClient())
+            {
+                PrepareHeaderWithAuthentication(client);
+                var response = client.GetAsync($"api/Account/UserInfo").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var userInfo = response.Content.ReadAsAsync<UserInfo>().Result;
+                    User user = GetUserByEmail(userInfo.Email);
+                    if (user != null)
+                    {
+                        return user;
+                    }
+                    return null;
+                }
+                return null;
+            }
+        }
+
+        private User GetUserByEmail(string email)
+        {
+            return new UserServiceGateway().Get().FirstOrDefault(x => x.Email == email);
         }
     }
 }

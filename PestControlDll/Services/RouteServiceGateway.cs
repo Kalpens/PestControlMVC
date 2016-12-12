@@ -17,7 +17,6 @@ namespace PestControlDll.Services
                 var u = new UserServiceGateway().Get(t.UserId);
                 if (u != null)
                 {
-                    u.Routes.Add(t);
                     t.Destinations = new List<Destination>();
                     new UserServiceGateway().Put(u);
                 }

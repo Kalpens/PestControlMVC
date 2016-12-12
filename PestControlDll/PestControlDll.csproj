@@ -61,6 +61,7 @@
     <Compile Include="Entities\PestType.cs" />
     <Compile Include="Entities\Route.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserInfo.cs" />
     <Compile Include="Entities\Worksheet.cs" />
     <Compile Include="Interfaces\IAccountGateway.cs" />
     <Compile Include="Interfaces\ILocalDestinationManager.cs" />
