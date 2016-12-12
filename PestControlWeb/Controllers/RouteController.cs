@@ -79,7 +79,15 @@ namespace PestControlWeb.Controllers
 
         public ActionResult DisplayDestinations(int? routeId)
         {
-            return View(rm.Get(routeId.Value));
+            if(routeId != null)
+            {
+                return View(rm.Get(routeId.Value));
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         // POST: Route/Delete/5

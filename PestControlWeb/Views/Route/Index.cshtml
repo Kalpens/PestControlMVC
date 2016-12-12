@@ -1,24 +1,22 @@
 ﻿@model List<PestControlDll.Entities.Route>
 @{
     ViewBag.Title = "Index";
-}   
+} 
+<h1 class="title">Select Route</h1>  
 
-<div class="container">
-    <h1 class="title">Select Route</h1>
-        <ul>
-            <li class="dropdown">
-
-                <a href="#" data-toggle="dropdown">Click me!</a>
-                <ul class="dropdown-menu">
-                    @{foreach (var route in Model)
-                        {
-                            <li><a href="/Route/DisplayDestinations" name="routeId" value=@route.Id>@route.Name</a></li>
-                        }
-                    }
-                </ul>
-            </li>
-        </ul>
+<form method="get" action="~/Route/DisplayDestinations">
+<div class="form-group">
+    <label for="route">Route</label>
+    <select class="form-control" id="route" name="routeId">
+        @foreach (var route in Model)
+        {
+            <option value="@route.Id">@route.Name</option>
+        }
+    </select>
 </div>
+
+<button type="submit" class="btn btn-default">Enter</button>
+</form>
 
 
 
