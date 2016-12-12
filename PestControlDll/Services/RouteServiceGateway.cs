@@ -38,7 +38,10 @@ namespace PestControlDll.Services
                 var response = client.GetAsync($"api/routes/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return response.Content.ReadAsAsync<Route>().Result;
+                    Route r = response.Content.ReadAsAsync<Route>().Result;
+                    List<Destination> destinations = new DllFacade().GetDestinationServiceGateway().Get();
+                    r.Destinations = destinations.FindAll(x => x.RouteId == r.Id);
+                    return r;
                 }
                 return null;
             }

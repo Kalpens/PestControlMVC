@@ -32,7 +32,10 @@ namespace PestControlDll.Services
                 var response = client.GetAsync($"api/users/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return response.Content.ReadAsAsync<User>().Result;
+                    User u = response.Content.ReadAsAsync<User>().Result;
+                    List<Route> routes = new DllFacade().GetRouteServiceGateway().Get();
+                    u.Routes = routes.FindAll(x => x.UserId == u.Id);
+                    return u;
                 }
                 return null;
             }

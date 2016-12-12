@@ -13,7 +13,7 @@
                     <div>
                         
 
-                        @if (Model.Id != 0)
+                        @if (Model != null)
                         {
                             <label class="control-label">Route</label>
                             <input type="hidden" id="Id" name="Route.Id" value=@Model.Id>
@@ -22,7 +22,6 @@
                         else
                         {
                             <label class="control-label">Route</label>
-                            <input type="hidden" id="Id" name="Route.Id" value=@Model.Id >
                             <input type="text" id="Name" name="Route.Name" size="20"/><br/>
                         }
                         Address: <input type="text" id="Address" name="Address"/>
@@ -56,7 +55,7 @@
                 <div class="col-md-10 col-sm-8 main-content">
                     @* Below here is the main content *@
                     <ul id="destinations">
-                        @if (Model.Destinations != null)
+                        @if (Model != null)
                         {
                             foreach (var item in Model.Destinations)
                             {

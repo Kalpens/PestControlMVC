@@ -17,14 +17,17 @@ namespace PestControlWeb.Controllers
         private IServiceGateway<Destination> destinationGateway = new DllFacade().GetDestinationServiceGateway();
         private IServiceGateway<Route> routeGateway = new DllFacade().GetRouteServiceGateway();
         private IAccountGateway accountGateway = new DllFacade().GetAccountGateway();
-        public ActionResult Index(Route route)
+        public ActionResult Index(int? routeId)
         {
-            //If route temptada is not null, then the tempdata will be sent to the view
-            if ((Route)TempData["route"] != null)
+            if (routeId != null)
             {
-                route = (Route)TempData["route"];
+                var route = routeGateway.Get(routeId.Value);
+                return View(route);
             }
-            return View(route);
+            else
+            {
+                return View();
+            }
         }
         public ActionResult Map(Route route)
         {
@@ -42,8 +45,7 @@ namespace PestControlWeb.Controllers
                     Destination destination = new Destination()
                     { FullAddress = model.Address, RouteId = model.Route.Id };
                     destinationGateway.Post(destination);
-                    TempData["route"] = model.Route;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new {routeId = model.Route.Id});
                 }
                 //There isn't a route so it is created and first destination added.
                 else if (model.Route.Id == 0 && model.Address != null)
@@ -55,12 +57,12 @@ namespace PestControlWeb.Controllers
                         Name = model.Route.Name,
                         UserId = currentUser.Id
                     };
+                    //For Kristian it got back null, needs handling.
                     route = routeGateway.Post(route);
                     Destination destination = new Destination()
                     { FullAddress = model.Address, RouteId = route.Id };
                     destinationGateway.Post(destination);
-                    TempData["route"] = routeGateway.Get(route.Id);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { routeId = route.Id });
                 }
                 else
                 {
