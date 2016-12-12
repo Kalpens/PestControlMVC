@@ -61,6 +61,7 @@ namespace PestControlDll.Services
                     {
                         List<Destination> destinations = new DllFacade().GetDestinationServiceGateway().Get();
                         item.Destinations = destinations.Where(x => x.RouteId == item.Id).ToList();
+                        routelist.Add(item);
                     }
                     return routelist;
                 }
