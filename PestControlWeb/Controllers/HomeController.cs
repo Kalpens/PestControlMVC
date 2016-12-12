@@ -53,7 +53,8 @@ namespace PestControlWeb.Controllers
                     {
                         Date = DateTime.Now,
                         Name = model.Route.Name,
-                        UserId = currentUser.Id
+                        UserId = currentUser.Id,
+                        User = currentUser
                     };
                     route = routeGateway.Post(route);
                     Destination destination = new Destination()
