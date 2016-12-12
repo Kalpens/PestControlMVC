@@ -55,7 +55,14 @@ namespace PestControlDll.Services
                 var response = client.GetAsync("api/routes").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return response.Content.ReadAsAsync<List<Route>>().Result;
+                    List<Route> routelist = new List<Route>();
+                    //A loop which adds routes to each user.
+                    foreach (var item in response.Content.ReadAsAsync<List<Route>>().Result)
+                    {
+                        List<Destination> destinations = new DllFacade().GetDestinationServiceGateway().Get();
+                        item.Destinations = destinations.Where(x => x.RouteId == item.Id).ToList();
+                    }
+                    return routelist;
                 }
                 return null;
             }

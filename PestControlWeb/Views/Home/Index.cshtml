@@ -54,17 +54,15 @@
 
                 <div class="col-md-10 col-sm-8 main-content">
                     @* Below here is the main content *@
-                    <ul id="destinations">
+                    <ol>
                         @if (Model != null)
                         {
                             foreach (var item in Model.Destinations)
                             {
-                                <input type="hidden" name="Route.Destinations.Lat" value=@item.Lat>
-                                <input type="hidden" name="Route.Destinations.Long" value=@item.Long >
-                                <input type="hidden" name="Route.Destinations.FullAddress" value=@item.FullAddress >
+                                <li>@item.FullAddress</li>
                             }
                         }
-                    </ul>
+                    </ol>
                 </div>
             </div>
         </div>

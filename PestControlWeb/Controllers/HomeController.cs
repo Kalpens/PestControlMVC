@@ -39,6 +39,7 @@ namespace PestControlWeb.Controllers
         {
             try
             {
+                var currentUser = accountGateway.GetCurrentUser();
                 //There is already a route
                 if (model.Route.Id != 0 && model.Address != null)
                 {
@@ -50,7 +51,6 @@ namespace PestControlWeb.Controllers
                 //There isn't a route so it is created and first destination added.
                 else if (model.Route.Id == 0 && model.Address != null)
                 {
-                    var currentUser = accountGateway.GetCurrentUser();
                     Route route = new Route()
                     {
                         Date = DateTime.Now,

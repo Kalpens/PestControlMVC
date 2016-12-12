@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using PestControlDll;
 using PestControlDll.Entities;
+using PestControlDll.Interfaces;
 
 namespace PestControlWeb.Controllers
 {
     public class RouteController : Controller
     {
         private IServiceGateway<Route> rm = new DllFacade().GetRouteServiceGateway();
+        private IAccountGateway accountGateway = new DllFacade().GetAccountGateway();
         // GET: Route
         public ActionResult Index()
         {
@@ -19,6 +21,8 @@ namespace PestControlWeb.Controllers
             //I do not know which one you wanted to do, but I did both ways, one passing into view, other one adding to the viewBag, but viewbag only had id and name.
             ViewBag.RoutId = new SelectList(rm.Get(), "Id", "Name");
             return View(rm.Get());
+            //var currentUser = accountGateway.GetCurrentUser();
+            //return View(currentUser.Routes);
         }
 
         // GET: Route/Details/5
