@@ -34,7 +34,7 @@ namespace PestControlDll.Services
                 {
                     User u = response.Content.ReadAsAsync<User>().Result;
                     List<Route> routes = new DllFacade().GetRouteServiceGateway().Get();
-                    u.Routes = routes.FindAll(x => x.UserId == u.Id);
+                    u.Routes = routes.Where(x => x.UserId == u.Id).ToList();
                     return u;
                 }
                 return null;
