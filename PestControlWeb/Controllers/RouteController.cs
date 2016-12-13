@@ -140,6 +140,12 @@ namespace PestControlWeb.Controllers
             if(id.HasValue)
             {
                 dm.Delete(id.Value);
+                if (rm.Get(routeId).Destinations.Count == 0)
+                {
+                    rm.Delete(routeId);
+                    return RedirectToAction("Index");
+                }
+                
             }
             return RedirectToAction("EditDestinations", new {routeId = routeId });
         }
