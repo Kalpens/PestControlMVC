@@ -123,25 +123,25 @@ namespace PestControlWeb.Controllers
 
         // GET: Route/Delete/5
         [HttpGet]
-        public ActionResult DeleteDestination(int id)
+        public ActionResult ConfirmDeleteDestination(int id)
         {
-            var destinationToDelete = dm.Get().FirstOrDefault(x => x.Id == id);
+            var destinationToDelete = dm.Get(id);
             if (destinationToDelete == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("EditDestinations", new { routeId = destinationToDelete.RouteId });
             }
 
             return View(destinationToDelete);
         }
 
         [HttpPost]
-        public ActionResult DeleteDestination(int? id)
+        public ActionResult ConfirmDeleteDestination(int? id, int routeId)
         {
             if(id.HasValue)
             {
-                dm.Get().RemoveAll(x => x.Id == id.Value);
+                dm.Delete(id.Value);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("EditDestinations", new {routeId = routeId });
         }
     }
 
