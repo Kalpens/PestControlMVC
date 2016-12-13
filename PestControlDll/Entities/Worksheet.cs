@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PestControlDll.Entities
 {
-    public class Worksheet : AbstractEntity
+    public class Worksheet
     {
         public string Date { get; set; }
         public string PhoneNumber { get; set; } //It's a string so we can add +xx depending on where he is in the country

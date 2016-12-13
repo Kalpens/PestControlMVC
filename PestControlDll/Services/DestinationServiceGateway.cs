@@ -24,8 +24,8 @@ namespace PestControlDll.Services
 
                 var destination = response.Content.ReadAsAsync<Destination>().Result;
                 //If destination is succesfully created, then we also will create worksheet.
-                //Worksheet worksheet = new Worksheet() { Destination = destination, Address = destination.FullAddress };
-                //destination.Worksheet = new WorksheetServiceGateway().Post(worksheet);
+                Worksheet worksheet = new Worksheet() { Address = destination.FullAddress, DestinationId = destination.Id};
+                destination.Worksheet = new WorksheetServiceGateway().Post(worksheet);
                 return destination;
             }
         }

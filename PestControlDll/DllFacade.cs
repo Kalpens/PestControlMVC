@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using PestControlDll.Entities;
 using PestControlDll.Interfaces;
-using PestControlDll.LocalManagers;
 using PestControlDll.Services;
 
 namespace PestControlDll
@@ -38,11 +37,6 @@ namespace PestControlDll
         public IAccountGateway GetAccountGateway()
         {
             return new AccountGateway();
-        }
-
-        public ILocalDestinationManager GetLocalDestinationManager()
-        {
-            return new LocalDestinationManager();
         }
     }
 }

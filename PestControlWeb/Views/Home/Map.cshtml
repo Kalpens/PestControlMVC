@@ -17,7 +17,9 @@
                         {
                             foreach (var item in Model.Destinations)
                             {
-                                <li>@item.FullAddress</li>
+                                <li>
+                                    @Html.ActionLink(item.FullAddress, "Worksheet", new { id = item.Id }, null)
+                                </li>
                             }
                         }
                     </ul>
