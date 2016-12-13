@@ -90,6 +90,12 @@ namespace PestControlWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult LogOut()
+        {
+            System.Web.HttpContext.Current.Session["token"] = null;
+            return RedirectToAction("Login");
+        }
     }
 
 }
