@@ -164,11 +164,10 @@
     <Content Include="Views\Route\Index.cshtml" />
     <Content Include="Views\Account\AccountInfo.cshtml" />
     <Content Include="Views\Home\Map.cshtml" />
-    <Content Include="Views\Route\DisplayDestinations.cshtml" />
-    <Content Include="Views\Route\EditRoute.cshtml" />
     <Content Include="Views\Route\EditDestinations.cshtml" />
     <Content Include="Views\Route\ConfirmDeleteDestination.cshtml" />
     <Content Include="Views\Home\Worksheet.cshtml" />
+    <Content Include="Views\Route\ConfirmDeleteRoute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
