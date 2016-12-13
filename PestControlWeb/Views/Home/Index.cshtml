@@ -28,6 +28,9 @@
 
 
                         <input type="submit" value="add"/>
+                        @if(Model != null) {
+                        @Html.ActionLink("ToMap", "Map", new { routeId = Model.Id }, new { @class = "btn btn-primary" })
+                         }
                     </div>
                     </div>
 

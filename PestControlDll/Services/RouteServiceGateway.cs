@@ -14,19 +14,12 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                var u = new UserServiceGateway().Get(t.UserId);
-                if (u != null)
-                {
-                    t.Destinations = new List<Destination>();
-                    new UserServiceGateway().Put(u);
-                }
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PostAsJsonAsync("api/routes", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Route>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<Route>().Result;
             }
         }
 
@@ -36,14 +29,13 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync($"api/routes/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    Route r = response.Content.ReadAsAsync<Route>().Result;
-                    List<Destination> destinations = new DllFacade().GetDestinationServiceGateway().Get();
-                    r.Destinations = destinations.Where(x => x.RouteId == r.Id).ToList();
-                    return r;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                Route r = response.Content.ReadAsAsync<Route>().Result;
+                List<Destination> destinations = new DllFacade().GetDestinationServiceGateway().Get();
+                r.Destinations = destinations.Where(x => x.RouteId == r.Id).ToList();
+                return r;
             }
         }
 
@@ -53,9 +45,11 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync("api/routes").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    List<Route> routelist = new List<Route>();
+
+                response.EnsureSuccessStatusCode();
+
+                List<Route> routelist = new List<Route>();
+
                     //A loop which adds routes to each user.
                     foreach (var item in response.Content.ReadAsAsync<List<Route>>().Result)
                     {
@@ -64,8 +58,6 @@ namespace PestControlDll.Services
                         routelist.Add(item);
                     }
                     return routelist;
-                }
-                return null;
             }
         }
 
@@ -75,11 +67,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PutAsJsonAsync("api/routes", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Route>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<Route>().Result;
             }
         }
 
@@ -89,11 +80,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.DeleteAsync($"api/routes/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                return false;
+
+                response.EnsureSuccessStatusCode();
+
+                return true;
             }
         }
     }

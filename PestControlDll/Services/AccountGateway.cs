@@ -59,16 +59,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync($"api/Account/UserInfo").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var userInfo = response.Content.ReadAsAsync<UserInfo>().Result;
+                response.EnsureSuccessStatusCode();
+                var userInfo = response.Content.ReadAsAsync<UserInfo>().Result;
                     User user = GetUserByEmail(userInfo.Email);
-                    if (user != null)
-                    {
                         return user;
-                    }
-                    return null;
-                }
                 return null;
             }
         }

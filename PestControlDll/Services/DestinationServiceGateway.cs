@@ -17,15 +17,16 @@ namespace PestControlDll.Services
             {
                 setCoordinates(t);
                 PrepareHeaderWithAuthentication(client);
+
                 var response = client.PostAsJsonAsync("api/destinations", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    //If destination is succesfully created, then we also will create worksheet.
-                    Worksheet worksheet = new Worksheet() { Destination = t, Address = t.FullAddress };
-                    t.Worksheet = new WorksheetServiceGateway().Post(worksheet);
-                    return response.Content.ReadAsAsync<Destination>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                var destination = response.Content.ReadAsAsync<Destination>().Result;
+                //If destination is succesfully created, then we also will create worksheet.
+                //Worksheet worksheet = new Worksheet() { Destination = destination, Address = destination.FullAddress };
+                //destination.Worksheet = new WorksheetServiceGateway().Post(worksheet);
+                return destination;
             }
         }
 
@@ -35,11 +36,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync($"api/destinations/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Destination>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<Destination>().Result;
             }
         }
 
@@ -49,11 +49,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync("api/destinations").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<List<Destination>>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<List<Destination>>().Result;
             }
         }
 
@@ -63,12 +62,11 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PutAsJsonAsync("api/destinations", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    setCoordinates(t);
-                    return response.Content.ReadAsAsync<Destination>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                setCoordinates(t);
+                return response.Content.ReadAsAsync<Destination>().Result;
             }
         }
 
@@ -78,11 +76,8 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.DeleteAsync($"api/destinations/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
+                response.EnsureSuccessStatusCode();
                     return true;
-                }
-                return false;
             }
         }
 

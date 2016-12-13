@@ -36,46 +36,19 @@
 {
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAIMFJfxLEK2MfCwQUSvqUk92Bd2eApj2o&callback=initMap"></script>
     <script type="text/javascript">
-        var markers = [
-            {
-                "title": 'Alibaug',
-                "lat": '17.641400',
-                "lng": '74.872200',
-                "description":
-                    'Alibaug is a coastal town and a municipal council in Raigad District in the Konkan region of Maharashtra, India.'
-            },
-            {
-                "title": 'Alibaug',
-                "lat": '19.641400',
-                "lng": '74.872200',
-                "description":
-                    'Alibaug is a coastal town and a municipal council in Raigad District in the Konkan region of Maharashtra, India.'
-            },
-            {
-                "title": 'Mumbai',
-                "lat": '18.964700',
-                "lng": '72.825800',
-                "description": 'Mumbai formerly Bombay, is the capital city of the Indian state of Maharashtra.'
-            },
-            {
-                "title": 'Pune',
-                "lat": '18.523600',
-                "lng": '73.847800',
-                "description":
-                    'Pune is the seventh largest metropolis in India, the second largest in the state of Maharashtra after Mumbai.'
-            }
-        ];
+        var markers = [];
         //Adding destinations onto marker array with coordinates
-        var list = [@Model.Destinations];
 
-        for (i = 0; i < list.size; i++) {
-            var s = i;
+        @foreach(var item in Model.Destinations)
+        {
+        <Text>
             markers.push({
-                "title": list[i].FullName,
-                "lat": list[i].lat,
-                "lng": list[i].lng,
-                "description": list[i].FullName
-            });
+                "title": '@item.FullAddress',
+                "lat": '@item.Lat',
+                "lng": '@item.Long',
+                "description": '@item.FullAddress'
+         });
+        </text>
         }
         //Options where the map will start on load.
         window.onload = function() {

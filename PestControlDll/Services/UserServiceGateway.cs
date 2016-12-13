@@ -16,11 +16,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PostAsJsonAsync("api/users", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<User>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<User>().Result;
             }
         }
 
@@ -30,14 +29,13 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync($"api/users/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    User u = response.Content.ReadAsAsync<User>().Result;
-                    List<Route> routes = new DllFacade().GetRouteServiceGateway().Get();
-                    u.Routes = routes.Where(x => x.UserId == u.Id).ToList();
-                    return u;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                User u = response.Content.ReadAsAsync<User>().Result;
+                List<Route> routes = new DllFacade().GetRouteServiceGateway().Get();
+                u.Routes = routes.Where(x => x.UserId == u.Id).ToList();
+                return u;
             }
         }
 
@@ -47,8 +45,8 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync("api/users").Result;
-                if (response.IsSuccessStatusCode)
-                {
+                response.EnsureSuccessStatusCode();
+
                     List<User> userlist = new List<User>();
                     //A loop which adds routes to each user.
                     foreach (var item in response.Content.ReadAsAsync<List<User>>().Result)
@@ -58,8 +56,6 @@ namespace PestControlDll.Services
                         userlist.Add(item);
                     }
                     return userlist;
-                }
-                return null;
             }
         }
 
@@ -69,11 +65,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PutAsJsonAsync("api/users", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<User>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<User>().Result;
             }
         }
 
@@ -83,11 +78,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.DeleteAsync($"api/users/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                return false;
+
+                response.EnsureSuccessStatusCode();
+
+                return true;
             }
         }
     }

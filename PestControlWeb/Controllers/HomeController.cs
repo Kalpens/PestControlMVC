@@ -29,9 +29,18 @@ namespace PestControlWeb.Controllers
                 return View();
             }
         }
-        public ActionResult Map(Route route)
+
+        public ActionResult Map(int? routeId)
         {
-            return View(route);
+            if (routeId != null)
+            {
+                var route = routeGateway.Get(routeId.Value);
+                return View(route);
+            }
+            else
+            {
+                return View(new Route());
+            }
         }
 
         [HttpPost]
@@ -55,14 +64,11 @@ namespace PestControlWeb.Controllers
                     {
                         Date = DateTime.Now,
                         Name = model.Route.Name,
-                        UserId = currentUser.Id,
-                        User = currentUser
+                        UserId = currentUser.Id
                     };
-                    //For Kristian it got back null, needs handling.
                     route = routeGateway.Post(route);
-                    Destination destination = new Destination()
-                    { FullAddress = model.Address, RouteId = route.Id };
-                    destinationGateway.Post(destination);
+                    destinationGateway.Post(new Destination()
+                    { FullAddress = model.Address, RouteId = route.Id });
                     return RedirectToAction("Index", new { routeId = route.Id });
                 }
                 else

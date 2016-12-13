@@ -34,7 +34,10 @@
                     <li>@Html.ActionLink("Route", "Index", "Route")</li>
                     <li>@Html.ActionLink("Account", "AccountInfo", "Account")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @if (HttpContext.Current.Session["token"] == null)
+                {
+                    @Html.Partial("_LoginPartial")
+                }
             </div>
         </div>
     </div>

@@ -16,10 +16,12 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PostAsJsonAsync("api/worksheets", t).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<Worksheet>().Result;
                 }
+
                 return null;
             }
         }
@@ -30,11 +32,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync($"api/worksheets/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Worksheet>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<Worksheet>().Result;
             }
         }
 
@@ -44,11 +45,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.GetAsync("api/worksheets").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<List<Worksheet>>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<List<Worksheet>>().Result;
             }
         }
 
@@ -58,11 +58,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.PutAsJsonAsync("api/worksheets", t).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Worksheet>().Result;
-                }
-                return null;
+
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsAsync<Worksheet>().Result;
             }
         }
 
@@ -72,11 +71,10 @@ namespace PestControlDll.Services
             {
                 PrepareHeaderWithAuthentication(client);
                 var response = client.DeleteAsync($"api/worksheets/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                return false;
+
+                response.EnsureSuccessStatusCode();
+
+                return true;
             }
         }
     }
