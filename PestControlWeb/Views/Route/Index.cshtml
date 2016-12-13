@@ -2,22 +2,23 @@
 @{
     ViewBag.Title = "Index";
 } 
-<h1 class="title">Select Route</h1>  
 
-<form method="get" action="~/Route/DisplayDestinations">
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<h1 class="title">Vælg din rute</h1>  
+
+<form method="get" action="~/Route/EditDestinations">
 <div class="form-group">
-    <label for="route">Route</label>
+
     <select class="form-control" id="route" name="routeId">
         @foreach (var route in Model)
         {
             <option value="@route.Id">@route.Name</option>
         }
     </select>
+
 </div>
 
-<button type="submit" class="btn btn-default">Enter</button>
-</form>
+<button type="submit" class="btn btn-success">Enter</button>
 
-
-
-    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    </form>

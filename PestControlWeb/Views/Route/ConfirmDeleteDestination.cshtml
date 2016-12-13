@@ -1,0 +1,16 @@
+﻿@model PestControlDll.Entities.Destination
+@{
+    ViewBag.Title = "ConfirmDeleteDestination";
+}
+
+<h2>ConfirmDeleteDestination</h2>
+
+<h3>Are you sure you want to delete @Model.FullAddress ?</h3>
+
+<form action="/Route/ConfirmDeleteDestination" method="post">
+    <input type="submit" value="Yes" class="btn btn-danger"/>
+    <input type="hidden" value="@Model.Id" name="id" />
+</form>
+
+<hr />
+<a class="btn btn-default" href="/Route/Index">No, go back!</a>

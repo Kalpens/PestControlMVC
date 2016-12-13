@@ -6,23 +6,37 @@ using System.Web.Mvc;
 using PestControlDll;
 using PestControlDll.Entities;
 using PestControlDll.Interfaces;
+using System.Net.Http;
+using System.Net;
 
 namespace PestControlWeb.Controllers
 {
     public class RouteController : Controller
     {
+        private IServiceGateway<Destination> dm = new DllFacade().GetDestinationServiceGateway();
         private IServiceGateway<Route> rm = new DllFacade().GetRouteServiceGateway();
         private IAccountGateway accountGateway = new DllFacade().GetAccountGateway();
         // GET: Route
         public ActionResult Index()
         {
-            //ViewBag. <--- This has no reference, but i need something like Viewbag.Route = List<Routes> 
-            //You did not make a refference to dllfacade to get service gateway, I just added it, line 13.
-            //I do not know which one you wanted to do, but I did both ways, one passing into view, other one adding to the viewBag, but viewbag only had id and name.
-            ViewBag.RoutId = new SelectList(rm.Get(), "Id", "Name");
-            return View(rm.Get());
-            //var currentUser = accountGateway.GetCurrentUser();
-            //return View(currentUser.Routes);
+            try
+            {
+                //ViewBag. <--- This has no reference, but i need something like Viewbag.Route = List<Routes> 
+                //You did not make a refference to dllfacade to get service gateway, I just added it, line 13.
+                //I do not know which one you wanted to do, but I did both ways, one passing into view, other one adding to the viewBag, but viewbag only had id and name.
+                ViewBag.RoutId = new SelectList(rm.Get(), "Id", "Name");
+                //return View(rm.Get());
+                var currentUser = accountGateway.GetCurrentUser();
+                return View(currentUser.Routes);
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
         }
 
         // GET: Route/Details/5
@@ -75,15 +89,9 @@ namespace PestControlWeb.Controllers
             }
         }
 
-        // GET: Route/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult EditDestinations(int? routeId)
         {
-            return View();
-        }
-
-        public ActionResult DisplayDestinations(int? routeId)
-        {
-            if(routeId != null)
+            if (routeId != null)
             {
                 return View(rm.Get(routeId.Value));
             }
@@ -91,23 +99,50 @@ namespace PestControlWeb.Controllers
             {
                 return View();
             }
-            
         }
 
-        // POST: Route/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult EditRoute()
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var user = accountGateway.GetCurrentUser();
+            return View(user.Routes);
+        }
 
-                return RedirectToAction("Index");
+
+        public ActionResult DisplayDestinations(int? routeId)
+        {
+            if (routeId != null)
+            {
+                return View(rm.Get(routeId.Value));
             }
-            catch
+            else
             {
                 return View();
             }
+
+        }
+
+        // GET: Route/Delete/5
+        [HttpGet]
+        public ActionResult DeleteDestination(int id)
+        {
+            var destinationToDelete = dm.Get().FirstOrDefault(x => x.Id == id);
+            if (destinationToDelete == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(destinationToDelete);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDestination(int? id)
+        {
+            if(id.HasValue)
+            {
+                dm.Get().RemoveAll(x => x.Id == id.Value);
+            }
+            return RedirectToAction("Index");
         }
     }
+
 }
