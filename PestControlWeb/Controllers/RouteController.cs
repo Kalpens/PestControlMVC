@@ -88,7 +88,6 @@ namespace PestControlWeb.Controllers
                 return View();
             }
         }
-
         public ActionResult EditDestinations(int? routeId)
         {
             if (routeId != null)

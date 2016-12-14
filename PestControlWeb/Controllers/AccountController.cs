@@ -78,7 +78,7 @@ namespace PestControlWeb.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     else
-                        ModelState.AddModelError("", response.Content.ReadAsStringAsync().Result + "Sis pidars notika");
+                        ModelState.AddModelError("", response.Content.ReadAsStringAsync().Result);
                 }
             }
 
