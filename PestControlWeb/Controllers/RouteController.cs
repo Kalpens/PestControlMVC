@@ -135,7 +135,7 @@ namespace PestControlWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ConfirmDeleteDestination(int? id, int routeId)
+        public ActionResult DeleteDestination(int? id, int routeId)
         {
             if(id.HasValue)
             {
@@ -148,6 +148,31 @@ namespace PestControlWeb.Controllers
                 
             }
             return RedirectToAction("EditDestinations", new {routeId = routeId });
+        }
+
+        // GET: Route/Delete/5
+        [HttpGet]
+        public ActionResult ConfirmDeleteRoute(int? routeId)
+        {
+            var routeToDelete = rm.Get(routeId.Value);
+            if (routeToDelete == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(routeToDelete);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteRoute(int? routeId)
+        {
+            if (routeId.HasValue)
+            {
+                rm.Delete(routeId.Value);
+                return RedirectToAction("Index");
+
+            }
+            return RedirectToAction("Index");
         }
     }
 
