@@ -1,7 +1,118 @@
-﻿
+﻿@using PestControlDll.Entities
+@model PestControlWeb.Models.WorksheetViewModel
 @{
     ViewBag.Title = "Worksheet";
 }
-
 <h2>Worksheet</h2>
 
+<form class="form-horizontal">
+    <fieldset>
+        <!-- Form Name -->
+        <legend>Register</legend>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Dato</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="26/11/2015" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Telefonnr</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="45657598" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Select Basic -->
+        @*<div class="form-group">
+            <label class="col-md-4 control-label" for="selectbasic">Select country</label>
+            <div class="col-md-4">
+                <select id="selectbasic" name="selectbasic" class="form-control">
+                    <option value="1">Option one</option>
+                    <option value="2">Option two</option>
+                </select>
+            </div>
+        </div>*@
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Navn</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="Simon" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Adresse</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="Esbjerg Spangsbjerg Kirkejev 130" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Postnr. & By:</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="6700 Esbjerg" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">E-mail</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="Jane@gmail.com" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">EAN-nr</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Rekv.nr</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Pris</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" class="form-control input-md" required="">
+
+            </div>
+            <!--Checkbox for tax*-->
+            <div class="funkyradio-default">
+                <input type="checkbox" name="checkbox" id="checkbox1" checked />
+                <label for="checkbox1">incl.moms.</label>
+            </div>
+        </div>
+        <!--Checkboxes for pest types-->
+        <div class="form-group">
+            @foreach (PestType t in Model.PestTypes)
+            {
+                <div class="col-md-3">
+                    <input type="checkbox" name="checkbox" id=@t.Id checked/>
+                    <label for=@t.Id>@t.Name</label>
+                </div>
+            }
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Noter</label>
+            <div class="col-md-4">
+                <textarea rows="5" cols="80">@Model.Worksheet.Note</textarea>
+            </div>
+        </div>
+
+</fieldset>
+</form>

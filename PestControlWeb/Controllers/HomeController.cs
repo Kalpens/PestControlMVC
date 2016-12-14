@@ -17,6 +17,7 @@ namespace PestControlWeb.Controllers
         private IServiceGateway<Destination> destinationGateway = new DllFacade().GetDestinationServiceGateway();
         private IServiceGateway<Route> routeGateway = new DllFacade().GetRouteServiceGateway();
         private IServiceGateway<Worksheet> worksheetGateway = new DllFacade().GetWorksheetServiceGateway();
+        private IServiceGateway<PestType> pestTypeGateway = new DllFacade().GetPestTypeServiceGateway();
         private IAccountGateway accountGateway = new DllFacade().GetAccountGateway();
         public ActionResult Index(int? routeId)
         {
@@ -49,7 +50,10 @@ namespace PestControlWeb.Controllers
             if (id != null)
             {
                 var worksheet = worksheetGateway.Get(id.Value);
-                return View(worksheet);
+                var model = new WorksheetViewModel();
+                model.Worksheet = worksheet;
+                model.PestTypes = pestTypeGateway.Get();
+                return View(model);
             }
             else
             {

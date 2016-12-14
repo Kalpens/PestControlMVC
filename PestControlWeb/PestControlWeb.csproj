@@ -127,6 +127,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MapViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\WorksheetViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
