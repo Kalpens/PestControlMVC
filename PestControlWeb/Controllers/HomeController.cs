@@ -41,7 +41,7 @@ namespace PestControlWeb.Controllers
             }
             else
             {
-                return View(new Route());
+                return HttpNotFound();
             }
         }
 
@@ -57,7 +57,7 @@ namespace PestControlWeb.Controllers
             }
             else
             {
-                return View();
+                return HttpNotFound();
             }
         }
 
