@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
+<link href="~/Content/Layout.css" rel="stylesheet" />
 <html>
 <head>
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -17,6 +19,7 @@
         window.appInsights=appInsights;
         appInsights.trackPageView();
     </script>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,10 +32,9 @@
                 </button>
                 @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" >
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Route", "Index", "Route")</li>
-                    <li>@Html.ActionLink("Account", "AccountInfo", "Account")</li>
                 </ul>
                @if (HttpContext.Current.Session["token"] == null)
                {

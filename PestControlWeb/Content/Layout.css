@@ -1,0 +1,17 @@
+﻿body {
+  background-image: url(http://www.userlogos.org/files/backgrounds/Mafia_Penguin/Map1280x800.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -86px;
+  margin-left: -89px;
+  text-align: center;
+}
