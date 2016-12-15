@@ -6,6 +6,7 @@
 <link href="~/Content/MapControllerCss.css" rel="stylesheet" />
 <body>
     <form method="post" action="/Home/AddAddressToRoute">
+        @Html.AntiForgeryToken()
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 col-sm-4 sidebar1">
@@ -33,25 +34,6 @@
                          }
                     </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

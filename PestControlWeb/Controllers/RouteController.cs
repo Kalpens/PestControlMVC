@@ -37,141 +37,155 @@ namespace PestControlWeb.Controllers
                 ViewBag.Error = ex.Message;
                 return View("Error");
             }
-        }
-
-        // GET: Route/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Route/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Route/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            catch (Exception ex)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                ViewBag.Error = ex.Message;
+                return View("Error");
             }
         }
-
-        // GET: Route/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Route/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
         public ActionResult EditDestinations(int? routeId)
         {
-            if (routeId != null)
+            try
             {
-                return View(rm.Get(routeId.Value));
+                if (routeId != null)
+                {
+                    return View(rm.Get(routeId.Value));
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
             }
-            else
+            catch (HttpRequestException ex)
             {
-                return View();
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
             }
-        }
-
-        public ActionResult EditRoute()
-        {
-            var user = accountGateway.GetCurrentUser();
-            return View(user.Routes);
-        }
-
-
-        public ActionResult DisplayDestinations(int? routeId)
-        {
-            if (routeId != null)
+            catch (Exception ex)
             {
-                return View(rm.Get(routeId.Value));
+                ViewBag.Error = ex.Message;
+                return View("Error");
             }
-            else
-            {
-                return View();
-            }
-
         }
 
         // GET: Route/Delete/5
         [HttpGet]
         public ActionResult ConfirmDeleteDestination(int id)
         {
-            var destinationToDelete = dm.Get(id);
-            if (destinationToDelete == null)
-            {
-                return RedirectToAction("EditDestinations", new { routeId = destinationToDelete.RouteId });
-            }
+            try {
+                var destinationToDelete = dm.Get(id);
+                if (destinationToDelete == null)
+                {
+                    return RedirectToAction("EditDestinations", new { routeId = destinationToDelete.RouteId });
+                }
 
-            return View(destinationToDelete);
+                return View(destinationToDelete);
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteDestination(int? id, int routeId)
         {
-            if(id.HasValue)
-            {
-                dm.Delete(id.Value);
-                if (rm.Get(routeId).Destinations.Count == 0)
+            try {
+                if (id.HasValue)
                 {
-                    rm.Delete(routeId);
-                    return RedirectToAction("Index");
+                    dm.Delete(id.Value);
+                    if (rm.Get(routeId).Destinations.Count == 0)
+                    {
+                        rm.Delete(routeId);
+                        return RedirectToAction("Index");
+                    }
+
                 }
-                
+                return RedirectToAction("EditDestinations", new { routeId = routeId });
             }
-            return RedirectToAction("EditDestinations", new {routeId = routeId });
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
         }
 
         // GET: Route/Delete/5
         [HttpGet]
         public ActionResult ConfirmDeleteRoute(int? routeId)
         {
-            var routeToDelete = rm.Get(routeId.Value);
-            if (routeToDelete == null)
-            {
-                return RedirectToAction("Index");
-            }
+            try {
+                var routeToDelete = rm.Get(routeId.Value);
+                if (routeToDelete == null)
+                {
+                    return RedirectToAction("Index");
+                }
 
-            return View(routeToDelete);
+                return View(routeToDelete);
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteRoute(int? routeId)
         {
-            if (routeId.HasValue)
-            {
-                rm.Delete(routeId.Value);
-                return RedirectToAction("Index");
+            try {
+                if (routeId.HasValue)
+                {
+                    rm.Delete(routeId.Value);
+                    return RedirectToAction("Index");
 
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
         }
     }
 

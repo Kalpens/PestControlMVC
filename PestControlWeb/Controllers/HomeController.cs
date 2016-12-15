@@ -19,16 +19,32 @@ namespace PestControlWeb.Controllers
         private IServiceGateway<Worksheet> worksheetGateway = new DllFacade().GetWorksheetServiceGateway();
         private IServiceGateway<PestType> pestTypeGateway = new DllFacade().GetPestTypeServiceGateway();
         private IAccountGateway accountGateway = new DllFacade().GetAccountGateway();
+
         public ActionResult Index(int? routeId)
         {
-            if (routeId != null)
-            {
-                var route = routeGateway.Get(routeId.Value);
-                return View(route);
+            try {
+                if (routeId != null)
+                {
+                    var route = routeGateway.Get(routeId.Value);
+                    return View(route);
+                }
+                else
+                {
+                    return View();
+                }
             }
-            else
+            catch (HttpRequestException ex)
             {
-                return View();
+                if (ex.Message.Contains("401"))
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Error");
             }
         }
 
@@ -36,8 +52,23 @@ namespace PestControlWeb.Controllers
         {
             if (routeId != null)
             {
-                var route = routeGateway.Get(routeId.Value);
-                return View(route);
+                try {
+                    var route = routeGateway.Get(routeId.Value);
+                    return View(route);
+                }
+                catch (HttpRequestException ex)
+                {
+                    if (ex.Message.Contains("401"))
+                        return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                    ViewBag.Error = ex.Message;
+                    return View("Error");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
+                    return View("Error");
+                }
             }
             else
             {
@@ -49,11 +80,26 @@ namespace PestControlWeb.Controllers
         {
             if (id != null)
             {
-                var worksheet = worksheetGateway.Get(id.Value);
-                var model = new WorksheetViewModel();
-                model.Worksheet = worksheet;
-                model.PestTypes = pestTypeGateway.Get();
-                return View(model);
+                try {
+                    var worksheet = worksheetGateway.Get(id.Value);
+                    var model = new WorksheetViewModel();
+                    model.Worksheet = worksheet;
+                    model.PestTypes = pestTypeGateway.Get();
+                    return View(model);
+                }
+                catch (HttpRequestException ex)
+                {
+                    if (ex.Message.Contains("401"))
+                        return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+
+                    ViewBag.Error = ex.Message;
+                    return View("Error");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
+                    return View("Error");
+                }
             }
             else
             {
@@ -62,6 +108,7 @@ namespace PestControlWeb.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddAddressToRoute(MapViewModel model)
         {
             try
@@ -97,7 +144,7 @@ namespace PestControlWeb.Controllers
             catch (HttpRequestException ex)
             {
                 if (ex.Message.Contains("401"))
-                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.LocalPath });
+                    return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.Host });
 
                 ViewBag.Error = ex.Message;
                 return View("Error");
