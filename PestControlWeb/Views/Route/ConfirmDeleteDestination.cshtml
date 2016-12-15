@@ -3,7 +3,7 @@
     ViewBag.Title = "ConfirmDeleteDestination";
 }
 
-<h2>ConfirmDeleteDestination</h2>
+<h2>Deleting destination</h2>
 
 <h3>Are you sure you want to delete @Model.FullAddress ?</h3>
 
@@ -15,4 +15,4 @@
 </form>
 
 <hr />
-@Html.ActionLink("No, go back!", "EditDestinations", new { routeId = Model.RouteId}, new { @class="btn btn-default" })
+@Html.ActionLink("No, go back", "EditDestinations", new { routeId = Model.RouteId}, new { @class="btn btn-default" })

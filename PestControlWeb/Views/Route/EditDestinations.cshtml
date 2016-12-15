@@ -14,7 +14,7 @@
         {
             <tr>
                 <td>@Model.Destinations[i].FullAddress</td>
-                <td><a class="btn btn-danger" href="/Route/ConfirmDeleteDestination/@Model.Destinations[i].Id">Fjern</a></td>
+                <td><a class="btn btn-danger" href="/Route/ConfirmDeleteDestination/@Model.Destinations[i].Id">Remove</a></td>
             </tr>
 
         }
@@ -22,8 +22,8 @@
 
     <form method="get" action="~/Route/ConfirmDeleteRoute/">
         <input type="hidden" name="routeId" value="@Model.Id"/>
-        <button class="btn btn-danger">Fjern rute</button>
-        <a href="~/Route/Index" class="btn btn-default">No, go back!</a>
+        <button class="btn btn-danger">Delete route</button>
+        <a href="~/Route/Index" class="btn btn-default">No, go back</a>
 
     </form>
 }

@@ -17,16 +17,14 @@
                     @* Below here is sidebar *@
                     <div>
                         
-
+                        <label class="control-label">Route</label>
                         @if (Model != null)
                         {
-                            <label class="control-label">Route</label>
                             <input type="hidden" id="Id" name="Route.Id" value=@Model.Id>
                             <input type="text" id="Name" name="Route.Name" size="20" value=@Model.Name><br/>
                         }
                         else
                         {
-                            <label class="control-label">Route</label>
                             <input type="text" id="Name" name="Route.Name" size="20"/><br/>
                         }
                         <label class="control-label">Address</label> 
