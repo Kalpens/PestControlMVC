@@ -15,7 +15,13 @@ namespace PestControlDll.Services
         {
             using (var client = new HttpClient())
             {
-                setCoordinates(t);
+                try {
+                    setCoordinates(t);
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
                 PrepareHeaderWithAuthentication(client);
 
                 var response = client.PostAsJsonAsync("api/destinations", t).Result;
@@ -83,9 +89,9 @@ namespace PestControlDll.Services
 
         private void setCoordinates(Destination t)
         {
-            var point = new GoogleLocationService().GetLatLongFromAddress(t.FullAddress);
-            t.Lat = point.Latitude;
-            t.Long = point.Longitude;
+                var point = new GoogleLocationService().GetLatLongFromAddress(t.FullAddress);
+                t.Lat = point.Latitude;
+                t.Long = point.Longitude;
         }
     }
 }
