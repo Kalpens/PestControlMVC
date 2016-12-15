@@ -6,12 +6,3 @@
   font-weight: bold;
   font-size: 14px;
 }
-
-.wrap {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -86px;
-  margin-left: -89px;
-  text-align: center;
-}
