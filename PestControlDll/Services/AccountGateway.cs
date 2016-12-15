@@ -62,8 +62,7 @@ namespace PestControlDll.Services
                 response.EnsureSuccessStatusCode();
                 var userInfo = response.Content.ReadAsAsync<UserInfo>().Result;
                     User user = GetUserByEmail(userInfo.Email);
-                        return user;
-                return null;
+                return user ?? null;
             }
         }
 
