@@ -34,7 +34,7 @@
             </div>
             <div class="navbar-collapse collapse" >
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Route", "Index", "Route")</li>
+                    <li>@Html.ActionLink("Routes", "Index", "Route")</li>
                 </ul>
                @if (HttpContext.Current.Session["token"] == null)
                {
@@ -43,7 +43,7 @@
                else
                {
                 <div style="text-align: right">
-                    @Html.ActionLink("Logout", "LogOut", "Account");
+                    @Html.ActionLink("Log out", "LogOut", "Account");
                 </div>
                }
             </div>
